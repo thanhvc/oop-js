@@ -89,7 +89,7 @@ var Engine = Engine || {};
 				var partname = nparts[i];
 				//check if the current parent already has the namespace declared
 				// if it isn't, then create it
-				if (typeof root[partname] === 'undifined') {
+				if (!root[partname]) {
 					root[partname] = {};
 				}
                 // get a reference to the deepest element in the hierarchy so far
@@ -105,7 +105,7 @@ var Engine = Engine || {};
 			nparts = namespace.split('.');
 			for(i = 0; ln = nparts.length; i++) {
 				part = nparts[i];
-				if (typeof root[part] === 'undefined') {
+				if (!root[part]) {
 					return null;
 				}
 
