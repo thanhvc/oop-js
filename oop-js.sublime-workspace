@@ -111,7 +111,7 @@
 			"file": "public/stream.html",
 			"settings":
 			{
-				"buffer_size": 547,
+				"buffer_size": 540,
 				"line_ending": "Unix"
 			}
 		},
@@ -119,7 +119,7 @@
 			"file": "public/js/ui/uiactivity.js",
 			"settings":
 			{
-				"buffer_size": 1332,
+				"buffer_size": 1333,
 				"line_ending": "Unix"
 			}
 		},
@@ -127,7 +127,7 @@
 			"file": "public/js/base/engine.js",
 			"settings":
 			{
-				"buffer_size": 3888,
+				"buffer_size": 3982,
 				"line_ending": "Unix"
 			}
 		},
@@ -135,7 +135,7 @@
 			"file": "public/js/ui/uistream.js",
 			"settings":
 			{
-				"buffer_size": 827,
+				"buffer_size": 969,
 				"line_ending": "Unix"
 			}
 		}
@@ -176,6 +176,7 @@
 	},
 	"file_history":
 	[
+		"/Users/thanhvc/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/thanhvc/java/eXoProjects/javascript/oop-js/public/js/ui/uistream.js",
 		"/Users/thanhvc/java/eXoProjects/javascript/exo-social-js/public/js/base/engine.js",
 		"/Users/thanhvc/java/eXoProjects/javascript/exo-social-js/public/engine.html",
@@ -377,7 +378,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -412,20 +413,20 @@
 					"file": "public/stream.html",
 					"settings":
 					{
-						"buffer_size": 547,
+						"buffer_size": 540,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								188,
-								188
+								184,
+								184
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
+							"syntax": "Packages/Emmet/Emmet.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -438,15 +439,15 @@
 					"file": "public/js/ui/uiactivity.js",
 					"settings":
 					{
-						"buffer_size": 1332,
+						"buffer_size": 1333,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								104,
-								104
+								674,
+								674
 							]
 						],
 						"settings":
@@ -455,7 +456,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 321.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -465,15 +466,15 @@
 					"file": "public/js/base/engine.js",
 					"settings":
 					{
-						"buffer_size": 3888,
+						"buffer_size": 3982,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2693,
-								2693
+								1878,
+								1878
 							]
 						],
 						"settings":
@@ -482,7 +483,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1130.0,
+						"translation.y": 1184.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -492,15 +493,15 @@
 					"file": "public/js/ui/uistream.js",
 					"settings":
 					{
-						"buffer_size": 827,
+						"buffer_size": 969,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								825,
-								825
+								166,
+								171
 							]
 						],
 						"settings":

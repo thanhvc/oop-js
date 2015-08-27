@@ -17,55 +17,33 @@ var Engine = Engine || {};
 	};
 
 	Engine.apply(Engine, {
-		assert : function(data) {
-			function notExists(obj) {
-				return (obj == null || obj == undefined);
-			}
-
-			function isExists(obj) {
-				return !notExists(obj);
-			}
-
-			return {
-				source : data,
-				isExists : function() {
-					var src = this.source;
-					return isExists(src);
-				},
-				notExists : function() {
-					var src = this.source;
-					return notExists(src);
-				},
-				isArray : function() {
-					var src = this.source;
-					return (isExists(src) && src.constructor == Array);
-				},
-				isBoolean : function() {
-					var src = this.source;
-					return (isExists(src) && src.constructor == Boolean);
-				},
-				isFunction : function() {
-					var src = this.source;
-					return (isExists(src) && src instanceof Function);	
-				},
-				isNumber: function() {
-					var src = this.source;
-					return (isExists(src) && src.constructor == Number);
-				},
-				isElement: function() {
-					var src = this.source;
-					return (isExists(src) && src.tagName && 1 == src.nodeType);
-				},
-				isTextNode: function() {
-					var src = this.source;
-					return (isExists(src) && 3 == src.nodeType);
-				},
-				isDefined: function() {
-					var src = this.source;
-                    return typeof src !== 'undefined';
-                }
- 			}
-		}
+		isExists : function(src) {
+			return !this.notExists(src);
+		},
+		notExists : function(src) {
+			return (src == null || src == undefined);
+		},
+		isArray : function(src) {
+			return (this.isExists(src) && src.constructor == Array);
+		},
+		isBoolean : function(src) {
+			return (this.isExists(src) && src.constructor == Boolean);
+		},
+		isFunction : function(src) {
+			return (this.isExists(src) && src instanceof Function);	
+		},
+		isNumber: function(src) {
+			return (this.isExists(src) && src.constructor == Number);
+		},
+		isElement: function(src) {
+			return (this.isExists(src) && src.tagName && 1 == src.nodeType);
+		},
+		isTextNode: function(src) {
+			return (this.isExists(src) && 3 == src.nodeType);
+		},
+		isDefined: function(src) {
+            return typeof src !== 'undefined';
+        }
 	});
 
     /**
@@ -82,37 +60,36 @@ var Engine = Engine || {};
     */
 	Engine.apply(Engine, {
 		createNS : function(namespace) {
-			var root = window, nparts, npart, i, ln;
-			nparts = namespace.split('.');
-			//loop through the parts and create a nested namespace if necessary
-			for(i =0; ln = nparts.length ; i++) {
-				var partname = nparts[i];
-				//check if the current parent already has the namespace declared
+			var root = window, parts, part, i, ln;
+    		parts = namespace.split('.');
+    		//loop through the parts and create a nested namespace if necessary
+    		for (i = 0, ln = parts.length; i < ln; i++) {
+    			part = parts[i];
+                //check if the current parent already has the namespace declared
 				// if it isn't, then create it
-				if (!root[partname]) {
-					root[partname] = {};
-				}
-                // get a reference to the deepest element in the hierarchy so far
-				root = root[partname];
+    			if (!root[part]) {
+                    //it's empty object.
+    				root[part] = {};
+    			}
+    			// get a reference to the deepest element in the hierarchy so far
+    			root = root[part];
+    		}
 
-			}
-			// the parent is now constructed with empty namespaces and can be used.
+    	    // the parent is now constructed with empty namespaces and can be used.
 			// we return the outermost namespace
-			return root;
+    		return root;
 		},
 		getNS : function(namespace) {
-			var root = window, nparts, part, i, ln;
-			nparts = namespace.split('.');
-			for(i = 0; ln = nparts.length; i++) {
-				part = nparts[i];
-				if (!root[part]) {
-					return null;
-				}
-
-				root = root[part];
-			}
-
-			return root;
+			var root = window, parts, part, i, ln;
+    		parts = namespace.split('.');
+    		for (i = 0, ln = parts.length; i < ln; i++) {
+    			part = parts[i];
+    			if (!root[part]) {
+    				return null;
+    			}
+    			root = root[part];
+    		}
+    		return root;
 		},
 		define : function(className, options, parent) {
 			if (parent && (!Engine.isFunction(parent) || !parent.prototype)) {

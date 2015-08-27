@@ -28,6 +28,7 @@
 		}
 	});
 
+/*
     
 
     //define the Activity Stream class
@@ -44,6 +45,6 @@
     Engine.define('exo.Social.UIProfile', {
 		componentId : 'Profile'
 	}, exo.Social.UIComponent);
-
+*/
 
 }());
