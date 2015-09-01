@@ -13,6 +13,12 @@ var Engine = Engine || {};
 			}
 		}
 
+		if (object && config && typeof config === 'function') {
+			var args = Array.prototype.slice.call(arguments, 1);
+			var result = config.apply(args);
+			Engine.apply(object, result);
+		}
+
 		return object;
 	};
 
@@ -43,6 +49,9 @@ var Engine = Engine || {};
 		},
 		isDefined: function(src) {
             return typeof src !== 'undefined';
+        },
+        isObject : function(src) {
+        	return (this.isExists(src) && src instanceof Object);	
         }
 	});
 
@@ -123,6 +132,7 @@ var Engine = Engine || {};
 
 			var Class = ns[className] = constructor;
 			Class.className = namespace + "." + className;
+
 			if (parent) {
 				Engine.apply(Class.prototype, parent.prototype);
 			} 
@@ -133,11 +143,70 @@ var Engine = Engine || {};
 		}
 	});
 
-
+    /**
+    * Applies the mediator pattern to the object
+    */
 	Engine.apply(Engine, {
     	getDomEl: function(selector) {
     		return document.getElementById(selector);
+    	},
+    	createElement : function(element, configs) {
+    		var i, text;
+    		var el = document.createElement(element);
+    		if (configs) {
+    			if (configs.children && Engine.isArray(configs.children)) {
+    				var i = 0;
+    				while(configs.children[i]) {
+    					el.appendChild(configs.children[i]);
+    					i++;
+    				}
+
+    				delete configs.children;
+    				
+    			} else if (configs.text) {
+    				text = document.createTextNode(configs.text);
+    				delete configs.text;
+    				el.appendChild(text);
+    			}
+
+    			Engine.addAttrs(el, configs);
+    		}
+    		return el;
+    	},
+    	addAttrs : function(el, attrs) {
+    		if (el) {
+    			if (attrs && Engine.isObject(attrs)) {
+    				var keys = Object.keys(attrs);
+    				var i, ln;
+
+    				for(i = 0, ln = keys.length; i < ln; i++) {
+    					el.setAttribute(keys[i], attrs[keys[i]]);
+    				}
+    			}
+    		}
     	}
+    });
+
+    Engine.apply(Engine, {
+    	channels : [],
+    	handle : function(channel, fn) {
+		  if (!Engine.channels[channel]) Engine.channels[channel] = [];
+		     Engine.channels[channel].push({context : this, callback : fn});
+		  return this;
+	    },
+	    notify : function(channel) {
+		    if(!Engine.channels[channel]) return false;
+		    var args = Array.prototype.slice.call(arguments, 1);
+		    for(var i = 0, ln = Engine.channels[channel].length; i < ln; i++) {
+		        var subscrition = Engine.channels[channel][i];
+			    subscrition.callback.apply(subscrition.context, args);
+		    }
+		    return this;
+	    },
+	    installTo : function(obj) {
+	    	obj.notify = this.notify;
+	    	obj.handle = this.handle;
+	    }
     });
 
 }());

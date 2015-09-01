@@ -28,23 +28,4 @@
 		}
 	});
 
-/*
-    
-
-    //define the Activity Stream class
-    Engine.define('exo.Social.UIStream', {
-		componentId : 'ActivityStream'
-	}, exo.Social.UIComponent);
-
-	//define the Connection class
-    Engine.define('exo.Social.UIConnection', {
-		componentId : 'Connection'
-	}, exo.Social.UIComponent);
-
-	//define the Profile class
-    Engine.define('exo.Social.UIProfile', {
-		componentId : 'Profile'
-	}, exo.Social.UIComponent);
-*/
-
 }());
