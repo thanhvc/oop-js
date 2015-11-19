@@ -18,8 +18,8 @@ appendTo = function(selector) {
 	var domEl = Engine.getDomEl(selector);
 	var div = document.createElement('DIV');
 	var methods = getAllMethods(Engine); 
-	console.log(methods);
-	var t = document.createTextNode(methods);
+	console.log(methods.join(',\n'));
+	var t = document.createTextNode(methods.join(', '));
 	div.appendChild(t);
 	domEl.appendChild(div);
 }

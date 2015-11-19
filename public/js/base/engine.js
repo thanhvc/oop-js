@@ -12,7 +12,8 @@ var Engine = Engine || {};
 				object[i] = config[i];
 			}
 		}
-
+        //if the config s 'function', it will be invoked 
+        //and then bind its result to source object
 		if (object && config && typeof config === 'function') {
 			var args = Array.prototype.slice.call(arguments, 1);
 			var result = config.apply(args);
@@ -131,7 +132,7 @@ var Engine = Engine || {};
 			};
 
 			var Class = ns[className] = constructor;
-			Class.className = namespace + "." + className;
+			//Class.className = namespace + "." + className;
 
 			if (parent) {
 				Engine.apply(Class.prototype, parent.prototype);
@@ -143,9 +144,7 @@ var Engine = Engine || {};
 		}
 	});
 
-    /**
-    * Applies the mediator pattern to the object
-    */
+    
 	Engine.apply(Engine, {
     	getDomEl: function(selector) {
     		return document.getElementById(selector);
@@ -186,7 +185,16 @@ var Engine = Engine || {};
     		}
     	}
     });
-
+    
+    /**
+    * Applies the mediator pattern to the object
+    *
+    * Applied the publish/subscriber pattern
+    * how to use this pattern
+    *   - intallTo the object
+    *   - obj.handle('channel_name', function() {});
+    *   - obj.notify('channel_name');
+    */
     Engine.apply(Engine, {
     	channels : [],
     	handle : function(channel, fn) {
@@ -208,5 +216,7 @@ var Engine = Engine || {};
 	    	obj.handle = this.handle;
 	    }
     });
+
+
 
 }());

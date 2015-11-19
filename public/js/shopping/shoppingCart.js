@@ -22,6 +22,8 @@ Engine.define('exo.Social.SearchBox', function() {
         handleSearch : function() {
             var query = input.value;
             if (query) {
+                //query is given agrurment of exo.Social.ProductPanel#search
+                //
                 Engine.notify('perform-search', query);
             }
         },

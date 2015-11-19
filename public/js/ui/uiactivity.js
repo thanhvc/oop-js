@@ -12,9 +12,10 @@
 			alert(str);
 		},
 		like : function(liker) {
-
+			console.log('like the activity');
 		},
 		unlike : function(unliker) {
+			console.log('unlike the activity');
 
 		},
 		toString : function() {
