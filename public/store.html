@@ -7,6 +7,11 @@
 </head>
 <body>
     <div id="main">
+        <div id="top-box">           
+            <button id="startCore_button">Start</button>
+            <button id="stopCore_button">Stop</button>
+        </div>
+
         <div id="search-box">
             <input id="search_input" type="text" name='q' />
             <button id="search_button">Search</button>
@@ -53,9 +58,20 @@
         </div> 
 
 
-        <script type="text/javascript" src="./js/base/engine.js"></script>
+        <script type="text/javascript" src="./js/base/engine.js"></script>       
         <script type="text/javascript" src="./js/shopping/shoppingCart.js"></script>
 
     </div>
+
+    <script type="text/javascript">
+      var start = Engine.getDomEl('startCore_button');
+      var stop = Engine.getDomEl('stopCore_button');   
+      start.addEventListener('click', function() {
+        Engine.Core.startAll();
+      });
+      stop.addEventListener('click', function() {
+        Engine.Core.stopAll();
+      });
+    </script>
 </body>
 </html>

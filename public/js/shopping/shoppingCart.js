@@ -3,27 +3,27 @@ Engine.define('exo.Social.SearchBox', function() {
     
     return {
         input: null,
-        button : null,
+        search : null,
         reset : null,
         init : function() {
             input = Engine.getDomEl('search_input');
-            button = Engine.getDomEl('search_button');
+            search = Engine.getDomEl('search_button');
             reset = Engine.getDomEl('quit_search');
-            button.addEventListener('click', this.handleSearch);
+            search.addEventListener('click', this.handleSearch);
             reset.addEventListener('click', this.quiteSearch);
         },
         destroy : function() {
-            button.removeEventListener('click', this.handleSearch);
+            search.removeEventListener('click', this.handleSearch);
             reset.removeEventListener('click', this.quiteSearch);
             input = null;
-            button = null;
+            search = null;
             reset = null;
         },
         handleSearch : function() {
             var query = input.value;
             if (query) {
                 //query is given agrurment of exo.Social.ProductPanel#search
-                //
+                //it will be invoked by Engine
                 Engine.notify('perform-search', query);
             }
         },
@@ -100,9 +100,12 @@ Engine.define('exo.Social.ProductPanel', function() {
         destroy : function() {
             var me = this; 
                 eachProduct(function (product) { 
-                    product.removeEventListener('click', me.addToCart);
-                
+                    product.removeEventListener('click', me.addToCart);               
                 }); 
+                Engine.unhandle('change-filter');
+                Engine.unhandle('reset-fitlers');
+                Engine.unhandle('perform-search');
+                Engine.unhandle('quit-search');
             //sb.ignore(['change-filter', 'reset-filters', 'perform-search'
         },
         search : function(query) {
@@ -188,18 +191,24 @@ Engine.define('exo.Social.ShoppingCart', function() {
 
 
 var searchBoxType = Engine.getNS('exo.Social.SearchBox');
-var searchBox = new searchBoxType();
-searchBox.init();
+Engine.Core.register('searchBox', searchBoxType);
+//var searchBox = new searchBoxType();
+//searchBox.init();
 
 //
 var filterPanelType = Engine.getNS('exo.Social.FilterPanel');
-var filterPanel = new filterPanelType();
-filterPanel.init();
+Engine.Core.register('filterPanel', filterPanelType);
+//var filterPanel = new filterPanelType();
+//filterPanel.init();
 //
 var productPanelType = Engine.getNS('exo.Social.ProductPanel');
-var productPanel = new productPanelType();
-productPanel.init();
+Engine.Core.register('productPanel', productPanelType);
+//var productPanel = new productPanelType();
+//productPanel.init();
 //
 var shoppingCartType = Engine.getNS('exo.Social.ShoppingCart');
-var shoppingCart = new shoppingCartType();
-shoppingCart.init();
+Engine.Core.register('shoppingCart', shoppingCartType);
+//var shoppingCart = new shoppingCartType();
+//shoppingCart.init();
+
+Engine.Core.startAll();

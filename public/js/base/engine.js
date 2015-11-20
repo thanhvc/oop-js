@@ -30,6 +30,9 @@ var Engine = Engine || {};
 		notExists : function(src) {
 			return (src == null || src == undefined);
 		},
+		isString: function(value) {
+            return typeof value === 'string';
+        },
 		isArray : function(src) {
 			return (this.isExists(src) && src.constructor == Array);
 		},
@@ -202,6 +205,12 @@ var Engine = Engine || {};
 		     Engine.channels[channel].push({context : this, callback : fn});
 		  return this;
 	    },
+	    unhandle : function(channel) {
+		  if (Engine.channels[channel]) {
+		  	Engine.channels[channel] = [];
+		  }
+		  return this;
+	    },
 	    notify : function(channel) {
 		    if(!Engine.channels[channel]) return false;
 		    var args = Array.prototype.slice.call(arguments, 1);
@@ -215,6 +224,50 @@ var Engine = Engine || {};
 	    	obj.notify = this.notify;
 	    	obj.handle = this.handle;
 	    }
+    });
+
+    //define Engine.Core
+    Engine.createNS('Engine.Core');
+    Engine.apply(Engine.Core, function() {
+	  var moduleData = {};
+	  return {
+		register : function(moduleId, clazzType, options) {
+		  moduleData[moduleId] = {
+			clazzType : clazzType || {},
+			instance: null,
+			options : options || {}
+		  };
+	    },
+	    start : function(moduleId) {
+	    	console.log("starting " + moduleId);
+	    	moduleData[moduleId].instance = new moduleData[moduleId].clazzType;
+	    	Engine.apply(moduleData[moduleId].instance, moduleData[moduleId].options);
+	    	moduleData[moduleId].instance.init();
+	    },
+	    stop: function(moduleId) {
+			var data = moduleData[moduleId];
+			if (data.instance) {
+				data.instance.destroy();
+				data.instance = null;
+			}
+		},
+	    startAll : function() {
+	      for (var moduleId in moduleData) {
+			if (moduleData.hasOwnProperty(moduleId)) {
+			  this.start(moduleId);
+			}
+		  }
+	    },
+	    stopAll : function() {
+	      for (var moduleId in moduleData) {
+			if (moduleData.hasOwnProperty(moduleId)) {
+			  this.stop(moduleId);
+			}
+		  }
+	    }
+
+      }
+
     });
 
 
